@@ -6,7 +6,11 @@ const{
     getAllLibrarians,
 } = require('../Controllers/Librarian.controller');
 
-router.post('/librarians', createLibrarian);
-router.get('/librarians', getAllLibrarians);
+const authController = require('../Controllers/authController');
+
+
+
+router.post('/', authController.protect, createLibrarian);
+router.get('/', authController.protect, getAllLibrarians);
 
 module.exports = router;

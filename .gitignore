@@ -1,0 +1,12 @@
+# Secret credentials
+.env
+
+# Large dependency folders (Don't push these!)
+node_modules/
+
+# Mac/Windows system files
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*

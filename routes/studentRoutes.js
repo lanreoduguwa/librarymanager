@@ -7,8 +7,10 @@ const {
     getStudentById,
 } =require ('../Controllers/student.controller');
 
-router.post('/students', createStudent);
-router.get('/students', getAllStudents);
-router.get('/students/:id', getStudentById);
+const authController = require('../Controllers/authController');
+
+router.post('/', authController.protect, createStudent);
+router.get('/', authController.protect, getAllStudents);
+router.get('/:id', authController.protect, getStudentById);
 
 module.exports = router;

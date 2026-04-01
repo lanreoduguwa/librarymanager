@@ -1,8 +1,8 @@
 const express = require('express');
 const Book = require('../models/book');
 const Author = require('../models/author');
-const Student = require('../models/Student');
-const Librarian = require('../models/Librarian');
+const Student = require('../models/student');
+const Librarian = require('../models/librarian');
 const AppError = require('../Utilis/AppError');
 
 
@@ -41,23 +41,25 @@ exports.createBook = async (req, res) => {
         if(!authors || authors.length === 0) {
             return res.status(400).json({ message: 'At least one author is required' });
         }
-        const authorsExist = await authors.find({ _id: { $in: authors } });
+        const authorsExist = await Author.find({ _id: { $in: authors } });
         if (authorsExist.length !== authors.length) {
             return res.status(400).json({ message: 'One or more authors not found' });
         }
 
         const book = new Book({ title, authors, isbn, publicationDate, genre });
         await book.save();
-        await book.populate('authors', 'name').execPopulate(); // Populate author names
+        await book.populate('authors', 'name'); // Populate author names
         res.status(201).json({
             success: true,
             message: 'Book created successfully',
             book
         });
     } catch (error) {
+        console.error('Error creating book:', error);
         res.status(400).json({ message: 'Error creating book', error });
     }
 };
+
 
 // Get all books
 exports.getAllBooks = async (req, res) => {
@@ -65,6 +67,7 @@ exports.getAllBooks = async (req, res) => {
         const books = await Book.find().populate('authors', 'name').populate('borrowedby', 'name').populate('issuedby', 'name');
         res.json(books);
     } catch (error) {
+        console.error('Error fetching books:', error);
         res.status(400).json({ message: 'Error fetching books', error });
     }
 

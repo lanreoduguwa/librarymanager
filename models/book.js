@@ -8,8 +8,7 @@ const bookSchema = new mongoose.Schema({
     authors: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Author',
-        required: true,
-        match: /^[A-Z][a-zA-Z\s]*$/ // Simple regex to ensure author names start with a capital letter and contain only letters and spaces
+        required: true
     }],
     status: {
         type: String, 
@@ -19,25 +18,32 @@ const bookSchema = new mongoose.Schema({
     isbn: {
         type: String,
         required: true,
-        unique: true,
-        match: /^(97(8|9))?\d{9}(\d|X)$/
+        unique: true
     },
     borrowedby: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Student'
+        ref: 'Student',
+        default: null
     },
     issuedby:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Librarian'
+        ref: 'Librarian',
+        default: null
     },
     ReturnDate: {
          type: Date ,
          default: null
 
     },
+
+    genre:{
+         type: String,
+            enum: ['Fiction','Drama', 'Non-Fiction', 'Science Fiction', 'Biography', 'History', 'Children', 'Other'],
+         },
+
     publicationDate: { 
-        type: Date ,
-       genre: String },
+        type: Date
+    },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Book', bookSchema);

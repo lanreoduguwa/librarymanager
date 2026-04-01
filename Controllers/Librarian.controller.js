@@ -1,4 +1,4 @@
-const Librarian = require('../models/librarian.model');
+const Librarian = require('../models/librarian');
 const AppError = require('../Utilis/AppError');
 // Create a new librarian
 exports.createLibrarian = async (req, res) => {
@@ -8,6 +8,7 @@ exports.createLibrarian = async (req, res) => {
         await librarian.save();
         res.status(201).json(librarian);
     } catch (error) {
+        console.error('Error creating librarian:', error);
         res.status(400).json({ message: 'Error creating librarian', error });
     }
 };

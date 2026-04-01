@@ -9,11 +9,13 @@ const {
     deleteAuthor
 } = require('../Controllers/author.controller');
 
-router.post('/authors', createAuthor);
-router.get('/authors', getAllAuthors);
-router.get('/authors/:id', getAuthorById);
-router.put('/authors/:id', updateAuthor);
-router.delete('/authors/:id', deleteAuthor);
+const authController = require('../Controllers/authController');
+
+router.post('/', authController.protect, createAuthor);
+router.get('/', authController.protect, getAllAuthors);
+router.get('/:id', authController.protect, getAuthorById);
+router.put('/:id', authController.protect, updateAuthor);
+router.delete('/:id', authController.protect, deleteAuthor);
 
 
 

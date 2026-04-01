@@ -1,4 +1,4 @@
-const Authr = require('../models/author');
+const Author = require('../models/author');
 const AppError = require('../Utilis/AppError');
 
 // Create a new author
@@ -62,3 +62,4 @@ exports.deleteAuthor = async (req, res) => {
         res.status(400).json({ message: 'Error deleting author', error });
     }
 };
+
